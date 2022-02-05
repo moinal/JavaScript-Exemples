@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <title>Composant web : alert avec type text/template & ARIA</title>
+    <style>
+        [role="alert"] {
+            padding: 10px;
+            border: 2px solid hsl(206, 74%, 54%);
+            border-radius: 4px;
+            background: hsl(206, 74%, 90%);
+            width:400px;
+        }
+
+        [role="alert"]:empty {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+<button id="alert-trigger">
+    Déclencher l'alerte
+</button>
+<!-- Nous pouvons utiliser un div (balise relativement neutre)
+     comme conteneur, c'est le rôle ARIA "alert" qui se charge de la sémantique.
+     Du fait de ce rôle, pas besoin d'injecter d'attributs de type :
+
+     aria-live = "assertive" //court-circuite la lecture en cours pour lire l'alerte
+     arai-atomic = "true" //
+
+     En effet ils sont implicites, dès l'activation de l'alerte le lecteur écran
+     s'interrompra pour lire le contenu du emssage d'alerte
+-->
+<div id="example" role="alert"></div>
+
+<!--contenu de notre alerte dans un template-->
+<script type="text/template" id="alert-template">
+    <h1>Oulala lala lala !!!</h1>
+    <p>Quelque chose de grave est en train de se passer !!!</p>
+</script>
+
+
+<script>
+
+//https://www.w3.org/TR/wai-aria-practices-1.1/examples/alert/alert.html
+/*
+*   This content is licensed according to the W3C Software License at
+*   https://www.w3.org/Consortium/Legal/2015/copyright-software-and-document
+*
+*/
+    window.addEventListener('load', function () {
+
+        var button = document.getElementById('alert-trigger');
+
+        button.addEventListener('click', addAlert);
+
+    });
+
+    /*
+    * @function addAlert
+    *
+    * @desc Adds an alert to the page
+    *
+    * @param   {Object}  event  -  Standard W3C event object
+    *
+    */
+
+    function addAlert (event) {
+
+        var example = document.getElementById('example');
+        var template = document.getElementById('alert-template').innerHTML;
+
+        example.innerHTML = template;
+
+    }
+
+</script>
+</body>
+</html>

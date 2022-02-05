@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Templates HTML : slots démo</title>
+</head>
+<body>
+
+<template id="produit-template">
+    <style>
+        produit{
+            display:flex;
+            flex-direction: column;
+        }
+        nom{font-size: 2rem;}
+        .description{color:red;}
+
+    </style>
+
+        <nom role="heading" aria-level="1"><slot name="nom">NOM PRODUIT</slot></nom>
+        <slot name="description" class="description">BESOIN D'UNE DESCRIPTION</slot>
+        <slot name="conditionnement">INFOS CONDITIONNEMENT</slot>
+
+    <hr>
+</template>
+
+
+
+
+<produit-details id="produit1" role="section">
+    <span slot="nom">Eau en poudre</span>
+    <p slot="description">Une eau riche en sels minéraux !</p>
+    <ul slot ="conditionnement">
+        <li>Par paquet de 50kg</li>
+        <li>Par paquet de 25kg</li>
+    </ul>
+</produit-details>
+
+<produit-details id="produit2" role="section">
+    <span slot="nom">Eau tiède</span>
+    <p slot="description">Une eau entre le chaud et le froid</p>
+    <ul slot ="conditionnement">
+        <li>Bouteille isotherme de 1,5 l</li>
+    </ul>
+</produit-details>
+
+
+<script>
+    customElements.define('produit-details',
+        class extends HTMLElement {
+            constructor() {
+                super();
+                const template = document
+                    .getElementById('produit-template')
+                    .content;
+                const shadowRoot = this.attachShadow({mode: 'open'})
+                    .appendChild(template.cloneNode(true));
+            }
+        })
+</script>
+</body>
+</html>

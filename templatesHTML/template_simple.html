@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Templates HTML : Démo</title>
+    <style>
+        table, th, td{
+            border:1px solid #ccc;
+            border-collapse: collapse;
+            padding:5px;
+        }
+    </style>
+</head>
+<body>
+
+
+<table id="historique-table" >
+    <thead>
+    <tr>
+        <td>Date</td>
+        <td>Valeur</td>
+    </tr>
+    </thead>
+    <tbody>
+    <tr>
+        <td>2/02/2022</td>
+        <td>14</td>
+    </tr>
+
+    </tbody>
+</table>
+
+<!-- Le noeud modèle à insérer -->
+<template id="historique-row">
+    <tr>
+        <td></td>
+        <td></td>
+    </tr>
+</template>
+
+<script>
+    /*
+    * Note : ARIA
+    * Si des ajouts ou suppressions de ligne du tableau sont effectués après le chargement initial de la page
+    * Adapter le modèle suivant :
+    * Cas d’étude avancé : liste de contacts
+    * De la page https://developer.mozilla.org/fr/docs/Web/Accessibility/ARIA/ARIA_Live_Regions
+    * Voir également
+    * */
+
+
+    // https://developer.mozilla.org/fr/docs/Web/HTML/Element/template
+    // On prépare une ligne pour le tableau
+    var template = document.querySelector("#historique-row");
+
+    // On clone la ligne et on l'insère dans le tableau
+    var tbody = document.querySelector("tbody");
+    var clone = document.importNode(template.content, true);
+    var td = clone.querySelectorAll("td");
+    td[0].textContent = "3/02/2022";
+    td[1].textContent = "0";
+
+    tbody.appendChild(clone);
+
+    // On fait de même pour une autre ligne
+    var clone2 = document.importNode(template.content, true);
+    td = clone2.querySelectorAll("td");
+    td[0].textContent = "4/02/2022";
+    td[1].textContent = "35";
+
+    // Puis on insère
+    tbody.appendChild(clone2);
+
+    /*
+    * Bien entendu, l'ajout de plusieurs lignes pourra être effectué
+    * en réponse au déclenchement d'un événement,
+    * au retour d'une requête XHR au format du JSON
+    * traité à l'aide de boucles. C'est tout l'intérêt.
+    * Un exemple dans la documentation de la recommandation W3C :
+    * https://html.spec.whatwg.org/multipage/scripting.html#the-template-element
+    */
+</script>
+</body>
+</html>
