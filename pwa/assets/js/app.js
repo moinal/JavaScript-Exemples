@@ -86,7 +86,7 @@ function randomNotification() {
 
 /*Websocket*/
 
-var socket = new WebSocket('wss://ws.hothothot.dog:9502');
+var socket = new WebSocket('wss://url');
 socket.onopen = function(event) {
     console.log("Connexion établie");
     // Display user friendly messages for the successful establishment of connection
